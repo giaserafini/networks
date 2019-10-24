@@ -1,14 +1,23 @@
 import socket
 import select
 import sys
-
+import uuid
+from threading import Timer
+import thread, time, sys
+from datetime import datetime as dt
 IP = "127.0.0.1"
 
 Port = 20001
 
 bufferSize = 1024
 
+def timer():
+    thread.interruptmain()
+
+
 msgFromServer = "ELO"
+
+my_id = uuid.uuid1()
 
 bytesToSend = str.encode(msgFromServer)
 
@@ -17,6 +26,7 @@ UDPSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
 UDPSocket.bind((IP, Port))
 
 print("I'm listening to you ")
+print(time.time(), time.clock()) #timer too
 
 while 1:
 
@@ -36,5 +46,10 @@ while 1:
     print(a*b)
    # print("{}: {}".format(ip, data.decode(encoding="utf-8").strip()))
     UDPSocket.sendto(bytesToSend, address)
+   # try:
+    #    Timer(3600, timer).start()
+     #   udp_listen.main()
+    #except:
+        #some_condition
 
 

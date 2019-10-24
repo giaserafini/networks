@@ -1,8 +1,11 @@
 import select
 import socket
 import sys
+import uuid
 
 msgFromClient = "ELO2"
+
+my_id = uuid.uuid1()
 
 bytesToSend = str.encode(msgFromClient)
 
