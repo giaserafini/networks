@@ -1,55 +1,41 @@
 import socket
-import select
 import sys
 import uuid
-from threading import Timer
-import thread, time, sys
-from datetime import datetime as dt
+
 IP = "127.0.0.1"
-
 Port = 20001
+listeningAddress = (IP, Port)
+my_id = uuid.uuid1()  # identyfikator sesji
 
-bufferSize = 1024
+UDPSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)  # gniazdo
+print ('Socket created successfully')
+UDPSocket.bind('', Port)
+#print('Socket binded to ')
 
-def timer():
-    thread.interruptmain()
+UDPSocket.listen(5)
+print("I'm listening to you")
 
+while True:
+    #tutaj jeszcze powinno byc cos takiego tylko nwm jak to zaimplementowac, bo nwm czym jest to c czy to klient?
+    # Establish connection with client.
+   # c, addr = s.accept()
+   # print
+   # 'Got connection from', addr
 
-msgFromServer = "ELO"
+    # send a thank you message to the client.
+    #c.send('Thank you for connecting')
 
-my_id = uuid.uuid1()
-
-bytesToSend = str.encode(msgFromServer)
-
-UDPSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
-
-UDPSocket.bind((IP, Port))
-
-print("I'm listening to you ")
-print(time.time(), time.clock()) #timer too
-
-while 1:
-
+    # Close the connection with the client
+   # c.close()
     bytesAddressPair = UDPSocket.recvfrom(1024)
     message = bytesAddressPair[0]
-    address = bytesAddressPair[1]
-    clientMsg = "Message from Client:{}".format(message)
-    clientIP = "Client IP Address:{}".format(address)
-    msgFromServer = input(a%b)
-    msgFromServer = input(a+b)  #nie jestem jeszcze pewna tych 3 linijek
-    msgFromServer = input (a*b)
-    serverSocket.sendto(messagetoclient, clientAddress)
-    print(clientMsg)
-    print(clientIP)
-    print (a%b)
-    print(a+b)
-    print(a*b)
-   # print("{}: {}".format(ip, data.decode(encoding="utf-8").strip()))
-    UDPSocket.sendto(bytesToSend, address)
-   # try:
-    #    Timer(3600, timer).start()
-     #   udp_listen.main()
-    #except:
-        #some_condition
+    address = bytesAddressPair[1][0]
+    print("Message from Client:", message)
+    print("Client IP Address:", address)
+
+#   clientMsg = "Message from Client:{}".format(message)
+#   clientIP = "Client IP Address:{}".format(address)
+#   print(clientMsg)
+#   print(clientIP)
 
 
