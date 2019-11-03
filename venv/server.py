@@ -1,55 +1,28 @@
 import socket
-import select
 import sys
 import uuid
-from threading import Timer
-import thread, time, sys
-from datetime import datetime as dt
+
 IP = "127.0.0.1"
-
 Port = 20001
+listeningAddress = (IP, Port)
+my_id = uuid.uuid1()  # identyfikator sesji
 
-bufferSize = 1024
+UDPSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)  # gniazdo
+UDPSocket.bind(listeningAddress)
 
-def timer():
-    thread.interruptmain()
+print("I'm listening to you")
 
-
-msgFromServer = "ELO"
-
-my_id = uuid.uuid1()
-
-bytesToSend = str.encode(msgFromServer)
-
-UDPSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
-
-UDPSocket.bind((IP, Port))
-
-print("I'm listening to you ")
-print(time.time(), time.clock()) #timer too
-
-while 1:
+while True:
 
     bytesAddressPair = UDPSocket.recvfrom(1024)
     message = bytesAddressPair[0]
-    address = bytesAddressPair[1]
-    clientMsg = "Message from Client:{}".format(message)
-    clientIP = "Client IP Address:{}".format(address)
-    msgFromServer = input(a%b)
-    msgFromServer = input(a+b)  #nie jestem jeszcze pewna tych 3 linijek
-    msgFromServer = input (a*b)
-    serverSocket.sendto(messagetoclient, clientAddress)
-    print(clientMsg)
-    print(clientIP)
-    print (a%b)
-    print(a+b)
-    print(a*b)
-   # print("{}: {}".format(ip, data.decode(encoding="utf-8").strip()))
-    UDPSocket.sendto(bytesToSend, address)
-   # try:
-    #    Timer(3600, timer).start()
-     #   udp_listen.main()
-    #except:
-        #some_condition
+    address = bytesAddressPair[1][0]
+    print("Message from Client:", message)
+    print("Client IP Address:", address)
+
+#   clientMsg = "Message from Client:{}".format(message)
+#   clientIP = "Client IP Address:{}".format(address)
+#   print(clientMsg)
+#   print(clientIP)
 
 
