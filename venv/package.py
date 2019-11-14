@@ -1,10 +1,10 @@
 class package:
-    def __init__(self, o, s, i, data, end):
+    def __init__(self):
         self.o = ""
-        self.s = 0
-        self.i = 0
-        self.data = 0
-        self.end = 0
+        self.s = ""
+        self.i = ""
+        self.data = []
+        self.end = ""
 
     def set_o(self, operation):
         self.o = operation
@@ -14,3 +14,9 @@ class package:
 
     def set_i(self, session_id):
         self.i = session_id
+
+    def add_data(self, number):
+        self.data.append(number)
+
+    def set_end(self, end):
+        self.end = end
