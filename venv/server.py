@@ -1,6 +1,7 @@
 import socket
 import sys
 import uuid
+import time
 from package import package
 
 IP = "127.0.0.1"
@@ -44,6 +45,10 @@ while True:
 
     if p1.end == "1":
         p1.set_s("OK")
+        socket.sendto(reply, address)
+
+        print ('Message[' + address[0] + ':' + str(address[1]) + '] - ' + data.strip())
+
         # tutaj wykonanie operacji
 
         # print("koniec")
@@ -69,3 +74,4 @@ while True:
 #   print(clientIP)
 
 # sys.getsizeof(message)-17 rozmiar
+UDPSocket.close()

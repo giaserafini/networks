@@ -2,6 +2,7 @@ import select
 import socket
 import sys
 import uuid
+import time
 
 msgFromClient = "ELO2"
 
@@ -13,7 +14,8 @@ serverAddressPort = ("127.0.0.1", 20001)
 
 bufferSize = 1024
 UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
-
+currentTime = time.ctime(time.time()) + "\r\n"
+UDPClientSocket.send(currentTime.encode('ascii'))
 UDPClientSocket.sendto(bytesToSend, serverAddressPort)
 #while 1:
     #message = input("> ")
@@ -45,3 +47,5 @@ UDPClientSocket.sendto(bytesToSend, serverAddressPort)
 #message4 = ' '
 #if message4:
  #   print (message4)
+
+ UDPClientSocket.close()

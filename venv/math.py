@@ -1,13 +1,17 @@
 import random
+import operator
 
-print (random.randint(a,b))
-print ("Please define an action to perform")
-operator=char(input("Please input the character"))
-print("The operation you have chosen is", operator)
-def math():
-    if operator == "A":
-     return a % b
-    elif operator == "D":
-        return a+b
-    elif operator == "M":
-        return a*b
+def operation(number1, number2, operator):
+        if operator == '+':
+           return number1 + number2
+        elif operator == '-':
+            return number1 - number2
+        elif operator == '%':
+            return number1 % number2
+
+#print (random.randint(a,b))
+
+number1 = int(input("Enter the first number: "))
+number2 = int(input("Enter the second one: "))
+operator = input("Enter the operator: ")
+print (operation(number1, number2, operator))
