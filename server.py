@@ -71,19 +71,19 @@ while True:
             number2 = int(p1.data[1])
             print(number1 % number2)
         elif p1.o == "B":
-            number1 = int(input("Enter the first number: "))
-            number2 = int(input("Enter the second one: "))
+            number1 = int(p1.data[0])
+            number2 = int(p1.data[1])
             print(number1 + number2)
         elif p1.o == "C":
-            number1 = int(input("Enter the first number: "))
-            number2 = int(input("Enter the second one: "))
+            number1 = int(p1.data[0])
+            number2 = int(p1.data[1])
             print(number1 - number2)
         elif p1.o == "a":
-            a = int(input("Enter the first number: "))
-            b = int(input("Enter the second number: "))
+            a = int(input(p1.data[0]))
+            b = int(input(p1.data[1]))
             print(random.randint(a, b))
-        socket.sendto(reply, address)
-    elif p1.o == "SortowanieRosnace":
+
+        elif p1.o == "SortowanieRosnace":
 
             print('\nThe sorted list: \t', sorted_list)
             print('\n')
@@ -95,7 +95,7 @@ while True:
 
             insertion_sort(lista)
 
-    elif p1.o == "SortowanieMalejace":
+        elif p1.o == "SortowanieMalejace":
 
             print('\nThe sorted list is: \t', sorted_list)
             sorted_list.reverse()
@@ -107,7 +107,7 @@ while True:
                 elements = int(input("Enter the element: \t"))
                 listad.append(elements)
 insertion_sort_d(listad)
-
+socket.sendto(reply, address)
             #print ('Message[' + address[0] + ':' + str(address[1]) + '] - ' + data.strip())
 
 
