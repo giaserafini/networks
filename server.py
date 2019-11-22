@@ -23,6 +23,7 @@ def insertion_sort(sorted_list): #rosnaco
             sorted_list[j + 1] = sorted_list[j]
             j -= 1
         sorted_list[j + 1] = key
+
 IP = "127.0.0.1"
 Port = 20001
 listeningAddress = (IP, Port)
@@ -42,6 +43,7 @@ while True:
     message = bytesAddressPair[0].decode()
     address = bytesAddressPair[1][0]
 
+    print(time.ctime())
     print("Message from Client:", message)
     print("Client IP Address:", address)
     print(bytesAddressPair)
@@ -69,22 +71,26 @@ while True:
         if p1.o == "A":
             number1 = int(p1.data[0])
             number2 = int(p1.data[1])
+            print(my_id)
             print(number1 % number2)
         elif p1.o == "B":
             number1 = int(p1.data[0])
             number2 = int(p1.data[1])
+            print(my_id)
             print(number1 + number2)
         elif p1.o == "C":
             number1 = int(p1.data[0])
             number2 = int(p1.data[1])
+            print(my_id)
             print(number1 - number2)
         elif p1.o == "a":
             a = int(input(p1.data[0]))
             b = int(input(p1.data[1]))
+            print(my_id)
             print(random.randint(a, b))
 
         elif p1.o == "SortowanieRosnace":
-
+            print(my_id)
             print('\nThe sorted list: \t', sorted_list)
             print('\n')
             lista = []
@@ -96,11 +102,10 @@ while True:
             insertion_sort(lista)
 
         elif p1.o == "SortowanieMalejace":
-
+            print(my_id)
             print('\nThe sorted list is: \t', sorted_list)
             sorted_list.reverse()
-            #print('\nThe sorted list: \t', sorted_list)
-           # print('\n')
+
             listad = []
             size = int(input("\nEnter size of the list: \t"))
             for i in range(size):
