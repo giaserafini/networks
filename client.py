@@ -18,17 +18,19 @@ UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
 #currentTime = time.ctime(time.time()) + "\r\n"
 #UDPClientSocket.send(currentTime.encode('ascii'))
 UDPClientSocket.sendto(bytesToSend, serverAddressPort)
-#while 1:
-    #message = input("> ")
-    #message = message.encode()
+while 1:
+    message = input("> ")
+    UDPClientSocket = message.encode()
 
-    #try:
-     #   UDPClientSocket.sendto(bytesToSend, ("127.0.0.1", 20001))
-      #  msgFromServer = UDPClientSocket.recvfrom(1024)
+    try:
+        UDPClientSocket.sendto(bytesToSend, ("127.0.0.1", 20001))
+        msgFromServer = UDPClientSocket.recvfrom(1024)
+        start = time.time()
+        message =  time.ctime()
        # #print("{}: {}".format(msgFromServer, data.decode()))
 
-    #except socket.error:
-     #   print("Error! {}".format(socket.error))
+    except socket.error:
+     print("Error! {}".format(socket.error))
       #  exit()
 
 
