@@ -76,15 +76,15 @@ while True:
         if p1.o == "A":
             number1 = int(p1.data[0])
             number2 = int(p1.data[1])
-            print(number1 % number2)
+            reply = number1 % number2
         elif p1.o == "B":
             number1 = int(p1.data[0])
             number2 = int(p1.data[1])
-            print(number1 + number2)
+            reply = number1 + number2
         elif p1.o == "C":
             number1 = int(p1.data[0])
             number2 = int(p1.data[1])
-            print(number1 - number2)
+            reply = number1 - number2
 
         elif p1.o == "a":
             a = int(p1.data[0])
@@ -92,28 +92,31 @@ while True:
             print(random.randint(a, b))
 
         elif p1.o == "SR":
-            print(session_id)
-            print('\nThe sorted list: \t', sorted_list)
-            print('\n')
             lista = []
             size = int(input("\nEnter size of the list: \t"))
             for i in range(size):
                 elements = int(input("Enter the element: \t"))
                 lista.append(elements)
-
             insertion_sort(lista)
+            print(session_id)
+            lista = p1.data
+            print('\nThe sorted list: \t', sorted_list)
+            print('\n')
+            reply = insertion_sort(sorted_list)
 
         elif p1.o == "SM":
-            print(session_id)
-            sorted_list = p1.data
-            print('\nThe sorted list is: \t', sorted_list)
-            sorted_list.reverse()
-
             listad = []
             size = int(input("\nEnter size of the list: \t"))
             for i in range(size):
                 elements = int(input("Enter the element: \t"))
                 listad.append(elements)
+            print(session_id)
+            sorted_list = p1.data
+            print('\nThe sorted list is: \t', sorted_list)
+            sorted_list.reverse()
+            reply = insertion_sort(sorted_list.reverse())
+
+
         reply ="yas"
 
     else:

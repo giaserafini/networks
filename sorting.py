@@ -1,18 +1,17 @@
 def insertion_sort_d(sorted_list):
     for i in range(1, len(sorted_list)):
         key = sorted_list[i]
-        j=i-1
-        while j>=0 and key >sorted_list[j]:
+        j = i - 1
+        while j >= 0 and key > sorted_list[j]:
             sorted_list[j + 1] = sorted_list[j]
-            j -=1
-        sorted_list[j+1] = key
+            j -= 1
+        sorted_list[j + 1] = key
         return sorted_list
     sorted_list = insertion_sort_d()
-    #print('\nThe sorted list is: \t', sorted_list)
-    #sorted_list.reverse()
-    #print('\nThe sorted list: \t', sorted_list)
-    #print('\n')
-    #return listad
+    # print('\nThe sorted list is: \t', sorted_list)
+    # sorted_list.reverse()
+    # print('\nThe sorted list: \t', sorted_list)
+    # print('\n')
 
 
 
@@ -24,4 +23,3 @@ for i in range(size):
     listad.append(elements)
 
 insertion_sort_d(listad)
-
