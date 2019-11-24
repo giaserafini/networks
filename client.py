@@ -5,48 +5,25 @@ import uuid
 import time
 import random
 
-msgFromClient = "o->A#d->5#"
-msgFromClient1 = "o->A#d->2#e->1"
-my_id = uuid.uuid1()
-
-bytesToSend = str.encode(msgFromClient)
-bytesToSend = str.encode(msgFromClient1)
 serverAddressPort = ("127.0.0.1", 20001)
-
 bufferSize = 1024
-UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
-#currentTime = time.ctime(time.time()) + "\r\n"
-#UDPClientSocket.send(currentTime.encode('ascii'))
-UDPClientSocket.sendto(bytesToSend, serverAddressPort)
+
+UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)  # gniazdo
+
 while 1:
-    message = input("> ")
-    UDPClientSocket = message.encode()
+    msgFromClient = input("Enter message: ")
+    bytesToSend = str.encode(msgFromClient)  # wiadomosc od klienta
 
-    try:
-        UDPClientSocket.sendto(bytesToSend, ("127.0.0.1", 20001))
-        msgFromServer = UDPClientSocket.recvfrom(1024)
-        start = time.time()
-        message =  time.ctime()
-       # #print("{}: {}".format(msgFromServer, data.decode()))
+    UDPClientSocket.sendto(bytesToSend, serverAddressPort)
 
-    except socket.error:
-     print("Error! {}".format(socket.error))
-      #  exit()
+    msgFromServer = UDPClientSocket.recvfrom(1024)
+    print(msgFromServer[0].decode())
+    if msgFromServer[0].decode() != "Received":
+        print("kys")
+        UDPClientSocket.close()
+        break
 
+# UDPClientSocket.close()
 
-
-#message = '-o'
-#if message:
-  #  print (message)
-#message1 = ''
-#if message1:
- #   print (message1)
-#message2 = 'x'
-#if message2:
- #   print(message2)
-#message3 = " "
-#if message3:
- #   print (message3)
-#message4 = ' '
-#if message4:
- #   print (message4)
+    # start = time.time()
+    # message = time.ctime()
