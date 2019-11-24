@@ -20,10 +20,12 @@ def insertion_sort(sorted_list): #rosnaco
     for i in range(1, len(sorted_list)):
         key = sorted_list[i]
         j = i - 1
-        while j >= 0 and key < sorted_list[j]:
+        while j >= 0 and key > sorted_list[j]:
             sorted_list[j + 1] = sorted_list[j]
             j -= 1
         sorted_list[j + 1] = key
+        return sorted_list
+    sorted_list = insertion_sort()
 
 
 IP = "127.0.0.1"
@@ -90,7 +92,7 @@ while True:
             print(random.randint(a, b))
 
         elif p1.o == "SR":
-            print(my_id)
+            print(session_id)
             print('\nThe sorted list: \t', sorted_list)
             print('\n')
             lista = []
@@ -102,7 +104,7 @@ while True:
             insertion_sort(lista)
 
         elif p1.o == "SM":
-            print(my_id)
+            print(session_id)
             sorted_list = p1.data
             print('\nThe sorted list is: \t', sorted_list)
             sorted_list.reverse()
