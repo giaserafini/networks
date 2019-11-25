@@ -116,10 +116,10 @@ while True:
             sorted_list.reverse()
             reply = insertion_sort(sorted_list.reverse())
 
-
-        reply ="yas"
-
+        # budowanie komunikatu odpowiedzi
+        response = "o->" + str(p1.o) + "#d->" + str(reply) + "#s->response#"
+        # ++ wyczyszczenie pakietu
     else:
-        reply = "Received"
-    UDPSocket.sendto(reply.encode(), bytesAddressPair[1])
+        response = "Received"
+    UDPSocket.sendto(response.encode(), bytesAddressPair[1])
 
