@@ -1,125 +1,192 @@
 import socket
-import sys
-import uuid
 import time
 import random
-import datetime
 from package import package
 
 
-def operation(number1, number2, operator):
-    if operator == '+':
-        return number1 + number2
-    elif operator == '-':
-        return number1 - number2
-    elif operator == '%':
-        return number1 % number2
-
-
-def insertion_sort(sorted_list): #rosnaco
-    for i in range(1, len(sorted_list)):
-        key = sorted_list[i]
-        j = i - 1
-        while j >= 0 and key > sorted_list[j]:
-            sorted_list[j + 1] = sorted_list[j]
-            j -= 1
-        sorted_list[j + 1] = key
-        return sorted_list
-    sorted_list = insertion_sort()
-
-
-IP = "127.0.0.1"
-Port = 20001
-listeningAddress = (IP, Port)
-session_id = uuid.uuid1()  # identyfikator sesji
-
+listeningAddress = ("", 20001)
 UDPSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)  # gniazdo
 UDPSocket.bind(listeningAddress)
 
 p1 = package()
-
-print("I'm listening to you")
 print(time.ctime())
+
 while True:
 
     # odebranie komunikatu
     bytesAddressPair = UDPSocket.recvfrom(1024)
     message = bytesAddressPair[0].decode()
     address = bytesAddressPair[1][0]
+    #session_id = random.randint(10000, 1000000)  # identyfikator sesji
+    session_id = 1000 #czy to bedzie dobre?
     p1.set_i(session_id)
 
-
+    # wyswietlenie komunikatu
     print(time.ctime())
-    print("Message from Client:", message)
-    print("Client IP Address:", address)
-    print(bytesAddressPair)
+    print("Message from client:", message)
 
-    # odczytanie komunikatu
+    # odczytanie operacji komunikatu
     c_message = message.split("#")
     for x in c_message:
         if x != "":
             y = x.split("->")
             if y[0] == "o":
                 p1.set_o(y[1])
-            elif y[0] == "s":
-                p1.set_s(y[1])
-            elif y[0] == "i":
-                p1.set_i(y[1])
-            elif y[0] == "d":
-                p1.add_data(y[1])
-            elif y[0] == "e":
-                p1.set_end(y[1])
 
-    if p1.end == "1":
+    if p1.o == "A":
+        for x in c_message:
+            if x != "":
+                y = x.split("->")
+                if y[0] == "d1":
+                    p1.set_data1(y[1])
+                elif y[0] == "d2":
+                    p1.set_data2(y[1])
+
+        if p1.data2 == "0":
+            p1.set_s("error")
+            p1.set_t()
+            response = p1.return_packet
+
+        else:
+            d3 = int(p1.data1) % int(p1.data2)
+            p1.set_data3(d3)
+            p1.set_s("OK")
+            p1.set_t()
+            response = p1.return_packet_response
+
+        print("Message to client:", response)
+        UDPSocket.sendto(response.encode(), bytesAddressPair[1])
+        p1 = package()
+
+    elif p1.o == "a":
+        for x in c_message:
+            if x != "":
+                y = x.split("->")
+                if y[0] == "d1":
+                    p1.set_data1(y[1])
+                elif y[0] == "d2":
+                    p1.set_data2(y[1])
+        if p1.data2 < p1.data1 :
+            p1.set_s("error")
+            p1.set_t()
+            response = p1.return_packet
+        else:
+            d3 = random.randint(int(p1.data1), int(p1.data2))
+            p1.set_data3(d3)
+
         p1.set_s("OK")
+        p1.set_t()
+        response = p1.return_packet_response
+        print("Message to client:", response)
+        UDPSocket.sendto(response.encode(), bytesAddressPair[1])
+        p1 = package()
 
-        if p1.o == "A":
-            number1 = int(p1.data[0])
-            number2 = int(p1.data[1])
-            reply = number1 % number2
-        elif p1.o == "B":
-            number1 = int(p1.data[0])
-            number2 = int(p1.data[1])
-            reply = number1 + number2
-        elif p1.o == "C":
-            number1 = int(p1.data[0])
-            number2 = int(p1.data[1])
-            reply = number1 - number2
+    elif p1.o == "D":
+        for x in c_message:
+            if x != "":
+                y = x.split("->")
+                if y[0] == "d1":
+                    p1.set_data1(y[1])
+                elif y[0] == "d2":
+                    p1.set_data2(y[1])
+        d3 = int(p1.data1) + int(p1.data2)
+        p1.set_data3(d3)
 
-        elif p1.o == "a":
-            a = int(p1.data[0])
-            b = int(p1.data[1])
-            print(random.randint(a, b))
+        p1.set_s("OK")
+        p1.set_t()
+        response = p1.return_packet_response
+        print("Message to client:", response)
+        UDPSocket.sendto(response.encode(), bytesAddressPair[1])
+        p1 = package()
 
-        elif p1.o == "SR":
-            lista = []
-            size = int(input("\nEnter size of the list: \t"))
-            for i in range(size):
-                elements = int(input("Enter the element: \t"))
-                lista.append(elements)
-            insertion_sort(lista)
-            print(session_id)
-            lista = p1.data
-            print('\nThe sorted list: \t', sorted_list)
-            print('\n')
-            reply = insertion_sort(sorted_list)
+    elif p1.o == "O":
+        for x in c_message:
+            if x != "":
+                y = x.split("->")
+                if y[0] == "d1":
+                    p1.set_data1(y[1])
+                elif y[0] == "d2":
+                    p1.set_data2(y[1])
+        d3 = int(p1.data1) - int(p1.data2) #oczekiwanie 20ms
+        p1.set_data3(d3)
 
-        elif p1.o == "SM":
-            listad = []
-            size = int(input("\nEnter size of the list: \t"))
-            for i in range(size):
-                elements = int(input("Enter the element: \t"))
-                listad.append(elements)
-            print(session_id)
-            sorted_list = p1.data
-            print('\nThe sorted list is: \t', sorted_list)
-            sorted_list.reverse()
-            reply = insertion_sort(sorted_list.reverse())
+        p1.set_s("OK")
+        p1.set_t()
+        response = p1.return_packet_response
+        print("Message to client:", response)
+        UDPSocket.sendto(response.encode(), bytesAddressPair[1])
+        p1 = package()
 
-        # budowanie komunikatu odpowiedzi
-        response = "o->" + str(p1.o) + "#d->" + str(reply) + "#s->response#"
-        # ++ wyczyszczenie pakietu
-    else:
-        response = "Received"
-    UDPSocket.sendto(response.encode(), bytesAddressPair[1])
+    elif p1.o == "SM":
+        end = 0
+        for x in c_message:
+            if x != "":
+                y = x.split("->")
+                if y[0] == "d1":
+                    p1.add_data(y[1])
+                if y[0] == "e":
+                    end = y[1]
+        p1.set_s("OK")
+        p1.set_t()
+        response = p1.return_packet_response_sort
+        print("Message to client:", response)
+        UDPSocket.sendto(response.encode(), bytesAddressPair[1])
 
+        while end == "0":
+            bytesAddressPair = UDPSocket.recvfrom(1024)
+            message = bytesAddressPair[0].decode()
+            print("Message from Client:", message)
+
+            c_message = message.split("#")
+            for x in c_message:
+                if x != "":
+                    y = x.split("->")
+                    if y[0] == "d1":
+                        p1.add_data(y[1])
+                    if y[0] == "e":
+                        end = y[1]
+            p1.set_s("OK")
+            p1.set_t()
+            p1.data_tab = sorted(p1.data_tab, key=int, reverse=True)
+            response = p1.return_packet_response_sort
+            print("Message to client:", response)
+            UDPSocket.sendto(response.encode(), bytesAddressPair[1])
+        p1 = package()
+
+    elif p1.o == "SR":
+        end = 0
+
+        for x in c_message:
+            if x != "":
+                y = x.split("->")
+                if y[0] == "d1":
+                    p1.add_data(y[1])
+                if y[0] == "e":
+                    end = y[1]
+
+        p1.set_s("OK")
+        p1.set_t()
+        response = p1.return_packet_response_sort
+        print("Message to client:", response)
+        UDPSocket.sendto(response.encode(), bytesAddressPair[1])
+
+        while end == "0":
+            bytesAddressPair = UDPSocket.recvfrom(1024)
+            message = bytesAddressPair[0].decode()
+            print("Message from Client:", message)
+
+            c_message = message.split("#")
+            for x in c_message:
+                if x != "":
+                    y = x.split("->")
+                    if y[0] == "d1":
+                        p1.add_data(y[1])
+                    if y[0] == "e":
+                        end = y[1]
+            p1.set_s("OK")
+            p1.set_t()
+            p1.data_tab = sorted(p1.data_tab, key=int)
+            response = p1.return_packet_response_sort
+            print("Message to client:", response)
+            UDPSocket.sendto(response.encode(), bytesAddressPair[1])
+        p1 = package()
