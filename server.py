@@ -17,8 +17,8 @@ while True:
     bytesAddressPair = UDPSocket.recvfrom(1024)
     message = bytesAddressPair[0].decode()
     address = bytesAddressPair[1][0]
-    #session_id = random.randint(10000, 1000000)  # identyfikator sesji
-    session_id = 1000 #czy to bedzie dobre?
+    session_id = random.randint(10000, 1000000)  # identyfikator sesji
+
     p1.set_i(session_id)
 
     # wyswietlenie komunikatu
