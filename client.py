@@ -76,7 +76,7 @@ while True:
         #wyslanie wiadomosci
         packet.set_o("A")
         packet.set_s("null")
-        packet.set_i()
+        packet.set_i(session_id=1000)
         packet.set_t()
         packet.set_data1(liczba1)
         packet.set_data2(liczba2)
@@ -95,7 +95,7 @@ while True:
         # wyslanie wiadomosci
         packet.set_o("a")
         packet.set_s("null")
-        packet.set_i()
+        packet.set_i(session_id=1000)
         packet.set_t()
         packet.set_data1(liczba1)
         packet.set_data2(liczba2)
@@ -115,7 +115,7 @@ while True:
         # wyslanie wiadomosci
         packet.set_o("D")
         packet.set_s("null")
-        packet.set_i()
+        packet.set_i(session_id=1000)
         packet.set_t()
         packet.set_data1(liczba1)
         packet.set_data2(liczba2)
@@ -135,7 +135,7 @@ while True:
         # wyslanie wiadomosci
         packet.set_o("O")
         packet.set_s("null")
-        packet.set_i()
+        packet.set_i(session_id=1000)
         packet.set_t()
         packet.set_s("null")
         packet.set_data1(liczba1)
@@ -157,9 +157,9 @@ while True:
             # wyslanie wiadomości
             packet.set_o("SM")
             if packet.i == "":
-                packet.set_i()
+                packet.set_i(session_id=1000)
             else:
-                packet.set_i()
+                packet.set_i(session_id=1000)
             packet.set_t()
             packet.set_s("null")
             packet.set_data1(liczba)
@@ -189,9 +189,9 @@ while True:
             # wyslanie wiadomości
             packet.set_o("SR")
             if packet.i == "":
-                packet.set_i()
+                packet.set_i(session_id=1000)
             else:
-                packet.set_i()
+                packet.set_i(session_id=1000)
             packet.set_t()
             packet.set_s("null")
             packet.set_data1(liczba)

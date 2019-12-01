@@ -71,7 +71,7 @@ class package:
                                                                str(self.t))
 
 
-        for [] in len(self.data_tab[0]): #czy to bedzie cos takiego?
+        for self.data_tab[0] in len(self.data_tab[0]): #czy to bedzie cos takiego?
             packet = "x->{0}#o->{1}#d->{2}#s->{3}#i->{4}#t->{5}#".format(str(self.x), str(self.o), str(self.data_tab[0]), str(self.s),
                                                               str(self.i),
                                                               str(self.t))
