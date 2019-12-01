@@ -76,7 +76,7 @@ while True:
         #wyslanie wiadomosci
         packet.set_o("A")
         packet.set_s("null")
-        packet.set_i("0")
+        packet.set_i()
         packet.set_t()
         packet.set_data1(liczba1)
         packet.set_data2(liczba2)
@@ -95,7 +95,7 @@ while True:
         # wyslanie wiadomosci
         packet.set_o("a")
         packet.set_s("null")
-        packet.set_i("0")
+        packet.set_i()
         packet.set_t()
         packet.set_data1(liczba1)
         packet.set_data2(liczba2)
@@ -115,7 +115,7 @@ while True:
         # wyslanie wiadomosci
         packet.set_o("D")
         packet.set_s("null")
-        packet.set_i("0")
+        packet.set_i()
         packet.set_t()
         packet.set_data1(liczba1)
         packet.set_data2(liczba2)
@@ -135,7 +135,7 @@ while True:
         # wyslanie wiadomosci
         packet.set_o("O")
         packet.set_s("null")
-        packet.set_i("0")
+        packet.set_i()
         packet.set_t()
         packet.set_s("null")
         packet.set_data1(liczba1)
@@ -152,14 +152,14 @@ while True:
         print("sortowanie malejące")
         end = 0
         while end == 0:
-            liczba = input("Podaj liczbe: ")
+            liczba = int(input("Podaj liczbe: "))
 
             # wyslanie wiadomości
             packet.set_o("SM")
             if packet.i == "":
-                packet.set_i("0")
+                packet.set_i()
             else:
-                packet.set_i(packet_response.i)
+                packet.set_i()
             packet.set_t()
             packet.set_s("null")
             packet.set_data1(liczba)
@@ -184,14 +184,14 @@ while True:
         print("sortowanie rosnace")
         end = 0
         while end == 0:
-            liczba = input("Podaj liczbe: ")
+            liczba = int(input("Podaj liczbe: "))
 
             # wyslanie wiadomości
             packet.set_o("SR")
             if packet.i == "":
-                packet.set_i("0")
+                packet.set_i()
             else:
-                packet.set_i(packet_response.i)
+                packet.set_i()
             packet.set_t()
             packet.set_s("null")
             packet.set_data1(liczba)
