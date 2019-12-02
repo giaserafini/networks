@@ -62,7 +62,7 @@ class package:
 
     @property
     def return_packet_response(self):
-        packet = "x->{0}#o->{1}#d3->{2}#s->{3}#i->{4}#t->{5}#".format(str(self.x), str(self.o), str(self.data3), str(self.s), str(self.i), str(self.t))
+        packet = "o->{0}#d3->{1}#s->{2}#i->{3}#t->{4}#".format(str(self.o), str(self.data3), str(self.s), str(self.i), str(self.t))
         return packet
 
     @property
@@ -70,15 +70,10 @@ class package:
         packet = "o->{0}#d->{1}#s->{2}#i->{3}#t->{4}#".format(str(self.o), str(self.data_tab[0]), str(self.s), str(self.i),
                                                                str(self.t))
 
-
-        for self.data_tab[0] in len(self.data_tab[0]): #czy to bedzie cos takiego?
-            packet = "x->{0}#o->{1}#d->{2}#s->{3}#i->{4}#t->{5}#".format(str(self.x), str(self.o), str(self.data_tab[0]), str(self.s),
-                                                              str(self.i),
-                                                              str(self.t))
         return packet
 
     @property
     def return_packet_response_sort_exc(self):
-        packet = "x->{0}#o->{1}#d3->{2}#s->{3}#i->{4}#t->{5}#".format(str(self.x), str(self.o), str(self.data3),
+        packet = "o->{1}#d3->{2}#s->{3}#i->{4}#t->{5}#".format(str(self.x), str(self.o), str(self.data3),
                                                                       str(self.s), str(self.i), str(self.t))
         return packet

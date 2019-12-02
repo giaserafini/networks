@@ -10,14 +10,15 @@ UDPSocket.bind(listeningAddress)
 
 p1 = package()
 print(time.ctime())
-
+session_id = random.randint(1000, 10000)
 while True:
 
     # odebranie komunikatu
     bytesAddressPair = UDPSocket.recvfrom(1024)
     message = bytesAddressPair[0].decode()
     address = bytesAddressPair[1][0]
-    session_id = random.randint(10000, 1000000)  # identyfikator sesji
+
+    # identyfikator sesji
 
     p1.set_i(session_id)
 
@@ -138,6 +139,9 @@ while True:
             print("Message from Client:", message)
 
             c_message = message.split("#")
+            p1.set_s("ACK")
+            response = p1.return_packet
+            UDPSocket.sendto(response.encode(), bytesAddressPair[1])
             for x in c_message:
                 if x != "":
                     y = x.split("->")
