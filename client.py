@@ -17,6 +17,7 @@ def odebranie_wyniku():
                 packet_response.set_o(y[1])
             elif y[0] == "s":
                 packet_response.set_s(y[1])
+
             elif y[0] == "i":
                 packet_response.set_i(y[1])
             elif y[0] == "t":
@@ -38,6 +39,7 @@ def odebranie_wyniku_sort():
                 packet_response.set_o(y[1])
             elif y[0] == "s":
                 packet_response.set_s(y[1])
+
             elif y[0] == "i":
                 packet_response.set_i(y[1])
             elif y[0] == "t":
@@ -152,7 +154,11 @@ while True:
         print("sortowanie malejące")
         end = 0
         while end == 0:
-            liczba = int(input("Podaj liczbe: "))
+            liczba = input("Podaj liczbe: ")
+            try:
+                number = int(liczba)
+            except ValueError:
+                print("To nie liczba")
 
             # wyslanie wiadomości
             packet.set_o("SM")
@@ -184,8 +190,11 @@ while True:
         print("sortowanie rosnace")
         end = 0
         while end == 0:
-            liczba = int(input("Podaj liczbe: "))
-
+            liczba = input("Podaj liczbe: ")
+            try:
+                number = int(liczba)
+            except ValueError:
+                print("To nie liczba")
             # wyslanie wiadomości
             packet.set_o("SR")
             if packet.i == "":

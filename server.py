@@ -155,8 +155,7 @@ while True:
             response = p1.return_packet_response_sort
             print("Message to client:", response)
             UDPSocket.sendto(response.encode(), bytesAddressPair[1])
-            if p1.data != int:
-                response = p1.return_packet_response_sort_exc
+
         p1 = package()
 
     elif p1.o == "SR":
@@ -182,6 +181,9 @@ while True:
             print("Message from Client:", message)
 
             c_message = message.split("#")
+            p1.set_s("ACK")
+            response = p1.return_packet
+            UDPSocket.sendto(response.encode(), bytesAddressPair[1])
             for x in c_message:
                 if x != "":
                     y = x.split("->")
@@ -195,6 +197,6 @@ while True:
             response = p1.return_packet_response_sort
             print("Message to client:", response)
             UDPSocket.sendto(response.encode(), bytesAddressPair[1])
-            if p1.data != int:
+            if p1.data1 != int or p1.data2 != int:
                 response = p1.return_packet_response_sort_exc
         p1 = package()
