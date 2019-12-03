@@ -159,13 +159,14 @@ while True:
                 number = int(liczba)
             except ValueError:
                 print("To nie liczba")
+                liczba = "blad"
 
             # wyslanie wiadomości
             packet.set_o("SM")
             if packet.i == "":
                 packet.set_i("0")
             else:
-                packet.set_i("0")
+                packet.set_i(packet_response.i)
             packet.set_t()
             packet.set_s("null")
             packet.set_data1(liczba)
@@ -185,7 +186,6 @@ while True:
 
             # odebranie wiadomosci
             odebranie_wyniku_sort()
-
     elif msgFromClient == "sortowanie rosnace":
         print("sortowanie rosnace")
         end = 0
@@ -195,6 +195,7 @@ while True:
                 number = int(liczba)
             except ValueError:
                 print("To nie liczba")
+                liczba = "blad"
             # wyslanie wiadomości
             packet.set_o("SR")
             if packet.i == "":
