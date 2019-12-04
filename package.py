@@ -65,6 +65,7 @@ class package:
         packet = "o->{0}#d3->{1}#s->{2}#i->{3}#t->{4}#".format(str(self.o), str(self.data3), str(self.s), str(self.i), str(self.t))
         return packet
 
+
     def return_packet_response_sort(self, number):
         packet = "o->{0}#d->{1}#s->{2}#i->{3}#t->{4}#".format(str(self.o), str(self.data_tab[number]), str(self.s),
                                                               str(self.i),
