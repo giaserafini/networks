@@ -36,6 +36,9 @@ while True:
                 p1.set_o(y[1])
 
     if p1.o == "A":
+        p1.set_s("ACK")
+        response = p1.return_packet
+        UDPSocket.sendto(response.encode(), bytesAddressPair[1])
         for x in c_message:
             if x != "":
                 y = x.split("->")
@@ -61,6 +64,9 @@ while True:
         p1 = package()
 
     elif p1.o == "a":
+        p1.set_s("ACK")
+        response = p1.return_packet
+        UDPSocket.sendto(response.encode(), bytesAddressPair[1])
         for x in c_message:
             if x != "":
                 y = x.split("->")
@@ -84,6 +90,9 @@ while True:
         p1 = package()
 
     elif p1.o == "D":
+        p1.set_s("ACK")
+        response = p1.return_packet
+        UDPSocket.sendto(response.encode(), bytesAddressPair[1])
         for x in c_message:
             if x != "":
                 y = x.split("->")
@@ -102,6 +111,9 @@ while True:
         p1 = package()
 
     elif p1.o == "O":
+        p1.set_s("ACK")
+        response = p1.return_packet
+        UDPSocket.sendto(response.encode(), bytesAddressPair[1])
         for x in c_message:
             if x != "":
                 y = x.split("->")
@@ -168,6 +180,7 @@ while True:
                 print("Message to client:", response)
                 UDPSocket.sendto(response.encode(), bytesAddressPair[1])
                 time.sleep(0.2)
+                UDPSocket.recvfrom(1024)
                 #we are waiting for aACKKKKK
         p1 = package()
 
@@ -218,5 +231,7 @@ while True:
             response = p1.return_packet_response_sort(number)
             print("Message to client:", response)
             UDPSocket.sendto(response.encode(), bytesAddressPair[1])
+            time.sleep(0.2)
+            UDPSocket.recvfrom(1024)
 
         p1 = package()
