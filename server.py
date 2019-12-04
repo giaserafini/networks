@@ -121,6 +121,7 @@ while True:
 
     elif p1.o == "SM":
         end = 0
+        number = 0
         for x in c_message:
             if x != "":
                 y = x.split("->")
@@ -139,7 +140,7 @@ while True:
         UDPSocket.sendto(response.encode(), bytesAddressPair[1])
 
         while end == "0":
-            number = number +1
+            number = number + 1
             bytesAddressPair = UDPSocket.recvfrom(1024)
             message = bytesAddressPair[0].decode()
             print("Message from Client:", message)
@@ -175,7 +176,7 @@ while True:
 
     elif p1.o == "SR":
         end = 0
-
+        number = 0
         for x in c_message:
             if x != "":
                 y = x.split("->")
@@ -190,11 +191,12 @@ while True:
         #if p1.s != "inv_arg":
         p1.set_s("OK")
         p1.set_t()
-        response = p1.return_packet_response_sort()
+        response = p1.return_packet_response_sort(number)
         print("Message to client:", response)
         UDPSocket.sendto(response.encode(), bytesAddressPair[1])
 
         while end == "0":
+            number = number + 1
             bytesAddressPair = UDPSocket.recvfrom(1024)
             message = bytesAddressPair[0].decode()
             print("Message from Client:", message)
@@ -213,7 +215,7 @@ while True:
             p1.set_s("OK")
             p1.set_t()
             p1.data_tab = sorted(p1.data_tab, key=int)
-            response = p1.return_packet_response_sort
+            response = p1.return_packet_response_sort(number)
             print("Message to client:", response)
             UDPSocket.sendto(response.encode(), bytesAddressPair[1])
 
