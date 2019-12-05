@@ -185,7 +185,7 @@ while True:
                 koniec = input("Czy jest to ostatnia liczba? tak/nie\n")
             packet.set_end(end)
 
-            request = packet.return_packet_sort
+            request = packet.return_packet_response_sort
 
             # print(request)  # wiadomosc od klienta
             UDPClientSocket.sendto(str(request).encode(), serverAddressPort)

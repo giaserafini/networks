@@ -66,12 +66,13 @@ class package:
         return packet
 
 
-    def return_packet_response_sort(self, number):
-        packet = "o->{0}#d->{1}#s->{2}#i->{3}#t->{4}#".format(str(self.o), str(self.data_tab[number]), str(self.s),
+    def return_packet_response_sort(self):
+        packet = "o->{0}#d->{1}#s->{2}#i->{3}#t->{4}#".format(str(self.o), str(self.data_tab), str(self.s),
                                                               str(self.i),
                                                               str(self.t))
 
         return packet
+
 
     @property
     def return_packet_response_sort_exc(self):
