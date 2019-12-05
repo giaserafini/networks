@@ -22,10 +22,14 @@ while True:
     # identyfikator sesji
 
     p1.set_i(session_id)
-
+    p1.set_s("ACK")
     # wyswietlenie komunikatu
     print(time.ctime())
     print("Message from client:", message)
+    p1.set_t()
+    response = p1.return_packet
+    UDPSocket.sendto(response.encode(), bytesAddressPair[1])
+
 
     # odczytanie operacji komunikatu
     c_message = message.split("#")
@@ -35,10 +39,9 @@ while True:
             if y[0] == "o":
                 p1.set_o(y[1])
 
+
     if p1.o == "A":
-        p1.set_s("ACK")
-        response = p1.return_packet
-        UDPSocket.sendto(response.encode(), bytesAddressPair[1])
+
         for x in c_message:
             if x != "":
                 y = x.split("->")
@@ -64,9 +67,7 @@ while True:
         p1 = package()
 
     elif p1.o == "a":
-        p1.set_s("ACK")
-        response = p1.return_packet
-        UDPSocket.sendto(response.encode(), bytesAddressPair[1])
+
         for x in c_message:
             if x != "":
                 y = x.split("->")
@@ -90,9 +91,7 @@ while True:
         p1 = package()
 
     elif p1.o == "D":
-        p1.set_s("ACK")
-        response = p1.return_packet
-        UDPSocket.sendto(response.encode(), bytesAddressPair[1])
+
         for x in c_message:
             if x != "":
                 y = x.split("->")
@@ -111,9 +110,7 @@ while True:
         p1 = package()
 
     elif p1.o == "O":
-        p1.set_s("ACK")
-        response = p1.return_packet
-        UDPSocket.sendto(response.encode(), bytesAddressPair[1])
+
         for x in c_message:
             if x != "":
                 y = x.split("->")

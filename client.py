@@ -7,7 +7,12 @@ bufferSize = 1024
 
 
 def odebranie_wyniku():
+
     msgFromServer = UDPClientSocket.recvfrom(1024)
+    time.sleep(0.2)
+    if msgFromServer !=0:
+        packet.set_s("ACK")
+        msgFromServer = UDPClientSocket.recvfrom(1024)
     msgFromServer_ = msgFromServer[0].decode()
     c_message = msgFromServer_.split("#")
     for x in c_message:
@@ -30,6 +35,7 @@ def odebranie_wyniku():
     print(packet_response.data3)
 def odebranie_wyniku_sort():
     msgFromServer = UDPClientSocket.recvfrom(1024)
+
     msgFromServer_ = msgFromServer[0].decode()
     c_message = msgFromServer_.split("#")
     for x in c_message:
