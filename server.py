@@ -22,13 +22,13 @@ while True:
     # identyfikator sesji
 
     p1.set_i(session_id)
-    p1.set_s("ACK")
+    #p1.set_s("ACK")
     # wyswietlenie komunikatu
     print(time.ctime())
     print("Message from client:", message)
-    p1.set_t()
-    response = p1.return_packet
-    UDPSocket.sendto(response.encode(), bytesAddressPair[1])
+   # p1.set_t()
+    #response = p1.return_packet
+    #UDPSocket.sendto(response.encode(), bytesAddressPair[1])
 
 
     # odczytanie operacji komunikatu
@@ -56,6 +56,10 @@ while True:
             response = p1.return_packet
 
         else:
+            p1.set_s("ACK")
+            p1.set_t()
+            response = p1.return_packet
+            UDPSocket.sendto(response.encode(), bytesAddressPair[1])
             d3 = int(p1.data1) % int(p1.data2)
             p1.set_data3(d3)
             p1.set_s("OK")
@@ -80,6 +84,10 @@ while True:
             p1.set_t()
             response = p1.return_packet
         else:
+            p1.set_s("ACK")
+            p1.set_t()
+            response = p1.return_packet
+            UDPSocket.sendto(response.encode(), bytesAddressPair[1])
             d3 = random.randint(int(p1.data1), int(p1.data2))
             p1.set_data3(d3)
 
@@ -100,6 +108,10 @@ while True:
                 elif y[0] == "d2":
                     p1.set_data2(y[1])
         d3 = int(p1.data1) + int(p1.data2)
+        p1.set_s("ACK")
+        p1.set_t()
+        response = p1.return_packet
+        UDPSocket.sendto(response.encode(), bytesAddressPair[1])
         p1.set_data3(d3)
 
         p1.set_s("OK")
@@ -119,6 +131,10 @@ while True:
                 elif y[0] == "d2":
                     p1.set_data2(y[1])
         d3 = int(p1.data1) - int(p1.data2) #oczekiwanie 20ms
+        p1.set_s("ACK")
+        p1.set_t()
+        response = p1.return_packet
+        UDPSocket.sendto(response.encode(), bytesAddressPair[1])
         p1.set_data3(d3)
 
         p1.set_s("OK")
