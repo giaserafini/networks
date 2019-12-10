@@ -7,6 +7,9 @@ bufferSize = 1024
 
 
 def odebranie_wyniku():
+    ackFromServer = UDPClientSocket.recvfrom(1024)
+    # print(ackFromServer)
+    time.sleep(0.2)
     msgFromServer = UDPClientSocket.recvfrom(1024)
     msgFromServer_ = msgFromServer[0].decode()
     c_message = msgFromServer_.split("#")
@@ -17,45 +20,48 @@ def odebranie_wyniku():
                 packet_response.set_o(y[1])
             elif y[0] == "s":
                 packet_response.set_s(y[1])
-
             elif y[0] == "i":
                 packet_response.set_i(y[1])
             elif y[0] == "t":
                 packet_response.set_time(y[1])
             elif y[0] == "d3":
                 packet_response.set_data3(y[1])
-
-    request = packet_response.return_packet_response
     # print(request)  # wiadomosc od serwera
-    print(packet_response.data3)
+    if packet_response.s == "error":
+        print("blad")
+    else:
+        print(packet_response.data3)
+    packet_response.set_s("ACK")
+    request = packet_response.return_packet
+    UDPClientSocket.sendto(str(request).encode(), serverAddressPort)
+
+
 def odebranie_wyniku_sort():
-    msgFromServer = UDPClientSocket.recvfrom(1024)
-    msgFromServer_ = msgFromServer[0].decode()
-    c_message = msgFromServer_.split("#")
-    for x in c_message:
-        if x != "":
-            y = x.split("->")
-            if y[0] == "o":
-                packet_response.set_o(y[1])
-            elif y[0] == "s":
-                packet_response.set_s(y[1])
-
-            elif y[0] == "i":
-                packet_response.set_i(y[1])
-            elif y[0] == "t":
-                packet_response.set_time(y[1])
-            elif y[0] == "d":
-                packet_response.data_tab = y[1]
-            elif y[0] == "e":
-                packet_response.set_end(y[1])
-
-    request = packet_response.return_packet_response_sort
-    #print(request)  # wiadomosc od serwera
-    print(packet_response.data_tab)
-
+    while packet_response.end != "1":
+        msgFromServer = UDPClientSocket.recvfrom(1024)[0].decode()
+        c_message = msgFromServer.split("#")
+        for x in c_message:
+            if x != "":
+                y = x.split("->")
+                if y[0] == "o":
+                    packet_response.set_o(y[1])
+                elif y[0] == "s":
+                    packet_response.set_s(y[1])
+                elif y[0] == "i":
+                    packet_response.set_i(y[1])
+                elif y[0] == "t":
+                    packet_response.set_time(y[1])
+                elif y[0] == "d1":
+                    packet_response.add_data(y[1])
+                    print(y[1])
+                elif y[0] == "e":
+                    packet_response.set_end(y[1])
+    packet_response.set_s("ACK")
+    packet_response.set_t()
+    response = packet_response.return_packet_sort
+    UDPClientSocket.sendto(response.encode(), serverAddressPort)
 
 UDPClientSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)  # gniazdo
-
 
 while True:
     packet = package()
@@ -153,6 +159,8 @@ while True:
     elif msgFromClient == "sortowanie malejace":
         print("sortowanie malejące")
         end = 0
+        packet.set_i("0")
+        packet.set_s("null")
         while end == 0:
             liczba = input("Podaj liczbe: ")
             try:
@@ -163,12 +171,7 @@ while True:
 
             # wyslanie wiadomości
             packet.set_o("SM")
-            if packet.i == "":
-                packet.set_i("0")
-            else:
-                packet.set_i(packet_response.i)
             packet.set_t()
-            packet.set_s("null")
             packet.set_data1(liczba)
             koniec = input("Czy jest to ostatnia liczba? tak/nie\n")
             if koniec == "tak":
@@ -180,15 +183,27 @@ while True:
             packet.set_end(end)
 
             request = packet.return_packet_sort
-
             # print(request)  # wiadomosc od klienta
             UDPClientSocket.sendto(str(request).encode(), serverAddressPort)
 
             # odebranie wiadomosci
-            odebranie_wyniku_sort()
+            ackFromServer = UDPClientSocket.recvfrom(1024)
+            ackFromServer = ackFromServer[0].decode()
+            c_message = ackFromServer.split("#")
+            for x in c_message:
+                if x != "":
+                    y = x.split("->")
+                    if y[0] == "i":
+                        packet.set_i(y[1])
+
+        odebranie_wyniku_sort()
+        # odebranie posortowanej tablicy
+
     elif msgFromClient == "sortowanie rosnace":
         print("sortowanie rosnace")
         end = 0
+        packet.set_i("0")
+        packet.set_s("null")
         while end == 0:
             liczba = input("Podaj liczbe: ")
             try:
@@ -196,14 +211,10 @@ while True:
             except ValueError:
                 print("To nie liczba")
                 liczba = "blad"
+
             # wyslanie wiadomości
             packet.set_o("SR")
-            if packet.i == "":
-                packet.set_i("0")
-            else:
-                packet.set_i("0")
             packet.set_t()
-            packet.set_s("null")
             packet.set_data1(liczba)
             koniec = input("Czy jest to ostatnia liczba? tak/nie\n")
             if koniec == "tak":
@@ -215,12 +226,22 @@ while True:
             packet.set_end(end)
 
             request = packet.return_packet_sort
-
             # print(request)  # wiadomosc od klienta
             UDPClientSocket.sendto(str(request).encode(), serverAddressPort)
 
             # odebranie wiadomosci
-            odebranie_wyniku_sort()
+            ackFromServer = UDPClientSocket.recvfrom(1024)
+            ackFromServer = ackFromServer[0].decode()
+            c_message = ackFromServer.split("#")
+            for x in c_message:
+                if x != "":
+                    y = x.split("->")
+                    if y[0] == "i":
+                        packet.set_i(y[1])
+
+
+        odebranie_wyniku_sort()
+        #odebranie posortowanej tablicy
     elif msgFromClient == "exit":
         UDPClientSocket.close()
         break
